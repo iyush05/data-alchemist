@@ -2,7 +2,6 @@ import express from "express"
 import multer from "multer"
 import path from 'path'
 import { parseCSVFile, parseExcelFile } from "../utils/parseFile";
-import { runValidations } from "../utils/runValidations";
 
 const router = express.Router();
 
@@ -25,7 +24,6 @@ router.post("/", upload.single("file"), async (req, res): Promise<void> => {
             parsedData = await parseCSVFile(file.buffer);
         } else if (ext === ".xlsx") {
             parsedData = await parseExcelFile(file.buffer);
-            // console.log(parsedData)
         } else {
             res.status(400).json({ error: "Unsupported file format" });
             return

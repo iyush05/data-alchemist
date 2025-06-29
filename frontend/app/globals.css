@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+.error-cell {
+  background-color: #ffe6e6; /* Light red background */
+  border: 1px solid red;
+}
