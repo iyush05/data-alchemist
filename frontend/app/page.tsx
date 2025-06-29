@@ -95,7 +95,7 @@ export default function UploadPage() {
       const tasks = tablesToValidate.find((t) => t.name.toLowerCase().includes("task"))?.rows || [];
 
 
-      const response = await axios.post("http://localhost:8080/validate", {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/validate`, {
         clients,
         workers,
         tasks,
@@ -114,7 +114,8 @@ export default function UploadPage() {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://localhost:8080/upload", formData, {
+      console.log(process.env.NEXT_PUBLIC_API_URL);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/upload/`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -345,7 +346,7 @@ export default function UploadPage() {
 
   const handleAssistant = async() => {
     try {
-      const response = await axios.post("http://localhost:8080/llm/search", {data: tables, query: aiQuery}, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/llm/search`, {data: tables, query: aiQuery}, {
       headers: { "Content-Type": "application/json" },
     })
     setSearchSummary(response.data.summary || response.data.message || JSON.stringify(response.data, null, 2));
